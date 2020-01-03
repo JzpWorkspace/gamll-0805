@@ -13,12 +13,12 @@
         <module name="gmall-oms" />
         <module name="gamll-pms" />
         <module name="gmall-generator" />
-        <module name="mybaties-demo" />
         <module name="gmall-admin" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
       <module name="gmall-pms" target="1.8" />
+      <module name="mybaties-demo" target="1.8" />
     </bytecodeTargetLevel>
   </component>
   <component name="JavacSettings">

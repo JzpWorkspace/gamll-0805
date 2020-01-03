@@ -13,7 +13,6 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2;
 @MapperScan("com.atguigu.gmall.wms.dao")
 @RefreshScope
 public class GmallWmsApplication {
-
     public static void main(String[] args) {
         SpringApplication.run(GmallWmsApplication.class, args);
     }
