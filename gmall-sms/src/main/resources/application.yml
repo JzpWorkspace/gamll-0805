@@ -14,3 +14,6 @@ spring:
         server-addr: 127.0.0.1:8848
 mybatis-plus:
   mapper-locations: classpath:mapper/sms/**/*.xml
+  global-config:
+    db-config:
+      id-type: auto

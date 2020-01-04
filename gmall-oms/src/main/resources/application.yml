@@ -14,3 +14,6 @@ spring:
     host: 127.0.0.1
 mybatis-plus:
   mapper-locations: classpath:mapper/oms/**/*.xml
+  global-config:
+    db-config:
+      id-type: auto
