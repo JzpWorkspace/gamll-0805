@@ -1,12 +1,14 @@
 package com.atguigu.gmall.pms.controller;
 
 import java.util.Arrays;
+import java.util.List;
 import java.util.Map;
 
 
 import com.atguigu.core.bean.PageVo;
 import com.atguigu.core.bean.QueryCondition;
 import com.atguigu.core.bean.Resp;
+import com.atguigu.gmall.pms.vo.GroupVo;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,7 +34,25 @@ import com.atguigu.gmall.pms.service.AttrGroupService;
 public class AttrGroupController {
     @Autowired
     private AttrGroupService attrGroupService;
+    //Request URL: http://127.0.0.1:8888/pms/attrgroup/withattrs/cat/225
+    @GetMapping("withattrs/cat/{catId}")
+    public Resp<List<GroupVo>> getSpuInfoByCid(@PathVariable("catId")Long cid){
+        List<GroupVo> groupVoList = attrGroupService.getSpuInfoByCid(cid);
+        return Resp.ok(groupVoList);
+    }
 
+
+    @GetMapping("withattr/{gid}")
+    public Resp<GroupVo> getAttrByGid(@PathVariable("gid")Long gid){
+        GroupVo groupVo = attrGroupService.getAttrByGid(gid);
+        return Resp.ok(groupVo);
+    }
+
+    @GetMapping("{catId}")
+    public Resp<PageVo> queryByCatId(@PathVariable("catId")Integer catId,QueryCondition queryCondition){
+        PageVo pageVo = attrGroupService.queryByCatId(queryCondition,catId);
+        return Resp.ok(pageVo);
+    }
     /**
      * 列表
      */

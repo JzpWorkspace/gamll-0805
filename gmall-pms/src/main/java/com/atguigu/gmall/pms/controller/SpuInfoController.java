@@ -7,6 +7,7 @@ import java.util.Map;
 import com.atguigu.core.bean.PageVo;
 import com.atguigu.core.bean.QueryCondition;
 import com.atguigu.core.bean.Resp;
+import com.atguigu.gmall.pms.vo.SpuInfoVo;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,7 +17,7 @@ import org.springframework.web.bind.annotation.*;
 import com.atguigu.gmall.pms.entity.SpuInfoEntity;
 import com.atguigu.gmall.pms.service.SpuInfoService;
 
-
+import javax.xml.crypto.Data;
 
 
 /**
@@ -33,6 +34,14 @@ public class SpuInfoController {
     @Autowired
     private SpuInfoService spuInfoService;
 
+    //http://127.0.0.1:8888/pms/spuinfo?t=1578190951300&page=1&limit=10&key=&catId=0
+    @GetMapping
+    public Resp<PageVo> getSpuInfoByCatId(QueryCondition queryCondition,
+                                          @RequestParam("catId")Long catId){
+        PageVo pageVo = this.spuInfoService.getSpuInfoByCatId(queryCondition,catId);
+
+        return Resp.ok(pageVo);
+    }
     /**
      * 列表
      */
@@ -64,9 +73,8 @@ public class SpuInfoController {
     @ApiOperation("保存")
     @PostMapping("/save")
     @PreAuthorize("hasAuthority('pms:spuinfo:save')")
-    public Resp<Object> save(@RequestBody SpuInfoEntity spuInfo){
-		spuInfoService.save(spuInfo);
-
+    public Resp<Object> save(@RequestBody SpuInfoVo spuInfoVo){
+		spuInfoService.bigSave(spuInfoVo);
         return Resp.ok(null);
     }
 

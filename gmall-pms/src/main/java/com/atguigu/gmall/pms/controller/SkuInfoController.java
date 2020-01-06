@@ -1,15 +1,18 @@
 package com.atguigu.gmall.pms.controller;
 
 import java.util.Arrays;
+import java.util.List;
 import java.util.Map;
 
 
 import com.atguigu.core.bean.PageVo;
 import com.atguigu.core.bean.QueryCondition;
 import com.atguigu.core.bean.Resp;
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
@@ -33,6 +36,13 @@ public class SkuInfoController {
     @Autowired
     private SkuInfoService skuInfoService;
 
+    //http://127.0.0.1:8888/pms/skuinfo/1
+    @GetMapping("{spuId}")
+    public Resp<List<SkuInfoEntity>> getSkuInfoById(@PathVariable("spuId")Long spuId){
+        List<SkuInfoEntity> skuInfoEntities = this.skuInfoService.list(
+                                        new QueryWrapper<SkuInfoEntity>().eq("spu_id",spuId));
+        return Resp.ok(skuInfoEntities);
+    }
     /**
      * 列表
      */
@@ -54,7 +64,6 @@ public class SkuInfoController {
     @PreAuthorize("hasAuthority('pms:skuinfo:info')")
     public Resp<SkuInfoEntity> info(@PathVariable("skuId") Long skuId){
 		SkuInfoEntity skuInfo = skuInfoService.getById(skuId);
-
         return Resp.ok(skuInfo);
     }
 
