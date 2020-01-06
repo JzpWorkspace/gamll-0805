@@ -5,7 +5,7 @@ import com.atguigu.gmall.pms.entity.*;
 import com.atguigu.gmall.pms.feign.GmallSmsClient;
 import com.atguigu.gmall.pms.service.*;
 import com.atguigu.gmall.pms.vo.BaseAttrValueVo;
-import com.atguigu.gmall.pms.vo.SaleVo;
+import com.atguigu.gmall.sms.vo.SaleVo;
 import com.atguigu.gmall.pms.vo.SkuInfoVo;
 import com.atguigu.gmall.pms.vo.SpuInfoVo;
 import org.apache.commons.lang.StringUtils;
@@ -15,7 +15,6 @@ import org.springframework.stereotype.Service;
 
 import java.util.Date;
 import java.util.List;
-import java.util.Map;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
@@ -145,17 +144,11 @@ public class SpuInfoServiceImpl extends ServiceImpl<SpuInfoDao, SpuInfoEntity> i
                 });
                 skuSaleAttrValueService.saveBatch(saleAttrs);
             }
-            //3.营销相关信息
+            //3.营销相关信息 feign调用sms营销微服务保存。
             SaleVo saleVo = new SaleVo();
             BeanUtils.copyProperties(sku,saleVo);
             saleVo.setSkuId(skuId);
             this.gmallSmsClient.saveSales(saleVo);
-            //3.1. skuBounds 积分
-
-            //3.2. skuLadder 打折
-
-            //3.3. FullReduction 满减
-
         });
 
     }

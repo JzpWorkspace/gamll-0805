@@ -1,8 +1,5 @@
 package com.atguigu.gmall.pms.vo;
 
-import com.atguigu.gmall.pms.entity.AttrEntity;
-import com.atguigu.gmall.pms.entity.ProductAttrValueEntity;
-import com.atguigu.gmall.pms.entity.SkuInfoEntity;
 import com.atguigu.gmall.pms.entity.SpuInfoEntity;
 import lombok.Data;
 
