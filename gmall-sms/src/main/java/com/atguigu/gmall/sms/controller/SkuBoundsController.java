@@ -34,9 +34,9 @@ public class SkuBoundsController {
     private SkuBoundsService skuBoundsService;
 
     @PostMapping("sales")
-    public Resp<Object> saveSales(@RequestBody SaleVo saleVo){
+    public Resp<String> saveSales(@RequestBody SaleVo saleVo){
         skuBoundsService.saveSales(saleVo);
-        return null;
+        return Resp.ok("成功");
     }
     /**
      * 列表
