@@ -3,7 +3,7 @@
 
 <mapper namespace="com.atguigu.gmall.pms.dao.ProductAttrValueDao">
 
-	<!-- 可根据自己的需求，是否要使用 -->
+    <!-- 可根据自己的需求，是否要使用 -->
     <resultMap type="com.atguigu.gmall.pms.entity.ProductAttrValueEntity" id="productAttrValueMap">
         <result property="id" column="id"/>
         <result property="spuId" column="spu_id"/>
@@ -14,5 +14,8 @@
         <result property="quickShow" column="quick_show"/>
     </resultMap>
 
+    <select id="querySearchValue" resultMap="productAttrValueMap">
+        SELECT * from pms_product_attr_value a INNER JOIN pms_attr b ON a.attr_id=b.attr_id WHERE spu_id=#{spuId} AND search_type=1;
+    </select>
 
 </mapper>

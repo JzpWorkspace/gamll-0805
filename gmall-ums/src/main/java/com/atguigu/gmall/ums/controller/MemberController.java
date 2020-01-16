@@ -32,7 +32,6 @@ import com.atguigu.gmall.ums.service.MemberService;
 public class MemberController {
     @Autowired
     private MemberService memberService;
-
     /**
      * 列表
      */
