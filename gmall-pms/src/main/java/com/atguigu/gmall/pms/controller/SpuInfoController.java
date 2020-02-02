@@ -69,8 +69,7 @@ public class SpuInfoController {
     @GetMapping("/info/{id}")
     @PreAuthorize("hasAuthority('pms:spuinfo:info')")
     public Resp<SpuInfoEntity> info(@PathVariable("id") Long id){
-		SpuInfoEntity spuInfo = spuInfoService.getById(id);
-
+		SpuInfoEntity spuInfo = this.spuInfoService.getById(id);
         return Resp.ok(spuInfo);
     }
 
