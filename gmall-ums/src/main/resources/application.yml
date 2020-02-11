@@ -11,7 +11,7 @@ spring:
     username: root
     password: root
   redis:
-    host: 127.0.0.1
+    host: 192.168.211.128
 mybatis-plus:
   mapper-locations: classpath:mapper/ums/**/*.xml
   global-config:
