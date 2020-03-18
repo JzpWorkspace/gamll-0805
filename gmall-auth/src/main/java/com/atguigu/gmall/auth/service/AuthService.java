@@ -11,11 +11,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.stereotype.Service;
 
+import java.security.PrivateKey;
+import java.security.PublicKey;
 import java.util.HashMap;
 import java.util.Map;
 
 @Service
-@EnableConfigurationProperties(JwtProperties.class)
+@EnableConfigurationProperties({JwtProperties.class})
 public class AuthService {
     @Autowired
     private GmallUmsClient umsClient;
@@ -35,7 +37,8 @@ public class AuthService {
             Map<String, Object> map = new HashMap<>();
             map.put("id", memberEntity.getId());
             map.put("username", memberEntity.getUsername());
-            return JwtUtils.generateToken(map, this.jwtProperties.getPrivateKey(), this.jwtProperties.getExpireTime());
+            PrivateKey privateKey = this.jwtProperties.getPrivateKey();
+            return JwtUtils.generateToken(map, privateKey, this.jwtProperties.getExpireTime());
 
         } catch (Exception e) {
             e.printStackTrace();

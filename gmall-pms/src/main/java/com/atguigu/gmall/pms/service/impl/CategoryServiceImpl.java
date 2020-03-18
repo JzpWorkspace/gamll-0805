@@ -49,8 +49,6 @@ public class CategoryServiceImpl extends ServiceImpl<CategoryDao, CategoryEntity
     @Override
     public List<CategoryVO> queryCategoriesWithSub(Long pid) {
         return this.categoryDao.queryCategoriesWithSub(pid);
-
-
     }
 
 }

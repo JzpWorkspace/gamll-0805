@@ -1,5 +1,6 @@
 package com.atguigu.gmall.index.service;
 
+import com.alibaba.fastjson.JSON;
 import com.atguigu.core.bean.Resp;
 import com.atguigu.gmall.index.annotation.GmallCache;
 import com.atguigu.gmall.pms.api.GmallPmsApi;
@@ -10,6 +11,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Service;
 import java.util.List;
+import java.util.Random;
+import java.util.concurrent.TimeUnit;
 
 @Service
 public class IndexService {
@@ -55,7 +58,7 @@ public class IndexService {
         List<CategoryVO> listVOS = listResp.getData();
 
 //        反序列化一下放入缓存中
-//        this.stringRedisTemplate.opsForValue().set(KEY_PRIFIX + pid, JSON.toJSONString(listVOS), 5 + new Random().nextInt(5), TimeUnit.DAYS);
+       //this.stringRedisTemplate.opsForValue().set(KEY_PREFIX + pid, JSON.toJSONString(listVOS), 5 + new Random().nextInt(5), TimeUnit.DAYS);
 
 //        lock.unlock();
         return listVOS;

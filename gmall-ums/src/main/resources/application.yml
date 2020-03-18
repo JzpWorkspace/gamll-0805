@@ -7,11 +7,11 @@ spring:
         server-addr: 127.0.0.1:8848
   datasource:
     driver-class-name: com.mysql.jdbc.Driver
-    url: jdbc:mysql://192.168.211.128/guli_ums
+    url: jdbc:mysql://192.168.72.128/guli_ums
     username: root
     password: root
   redis:
-    host: 192.168.211.128
+    host: 192.168.72.128
 mybatis-plus:
   mapper-locations: classpath:mapper/ums/**/*.xml
   global-config:

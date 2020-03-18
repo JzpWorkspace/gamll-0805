@@ -33,8 +33,8 @@ public class JwtProperties {
                 RsaUtils.generateKey(pubKeyPath, priKeyPath, secret);
             }
             //获取公私钥文件内容
-            PublicKey publicKey = RsaUtils.getPublicKey(pubKeyPath);
-            PrivateKey privateKey = RsaUtils.getPrivateKey(priKeyPath);
+            publicKey = RsaUtils.getPublicKey(pubKeyPath);
+            privateKey = RsaUtils.getPrivateKey(priKeyPath);
 
         } catch (Exception e) {
             e.printStackTrace();

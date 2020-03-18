@@ -4,26 +4,23 @@ import com.alibaba.fastjson.JSON;
 import com.atguigu.gmall.index.annotation.GmallCache;
 import org.apache.commons.lang3.StringUtils;
 import org.aspectj.lang.ProceedingJoinPoint;
-import org.aspectj.lang.Signature;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.reflect.MethodSignature;
 import org.redisson.api.RLock;
 import org.redisson.api.RedissonClient;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Component;
-import sun.reflect.generics.tree.ReturnType;
-
-import java.lang.annotation.Annotation;
+import java.lang.reflect.Method;
+import java.lang.reflect.Parameter;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Random;
 import java.util.concurrent.TimeUnit;
 
-@Component
 @Aspect
+@Component
 public class GmallCacheAspect {
     @Autowired
     private StringRedisTemplate redisTemplate;
@@ -34,19 +31,21 @@ public class GmallCacheAspect {
     public Object around(ProceedingJoinPoint joinPoint) throws Throwable{
        //首先获取注解对象
         MethodSignature signature = (MethodSignature)joinPoint.getSignature();
-        GmallCache annotation = signature.getMethod().getAnnotation(GmallCache.class);
+        Method method = signature.getMethod();
+        GmallCache gmallCache = method.getAnnotation(GmallCache.class);
         Class returnType = signature.getReturnType();
-        List<ProceedingJoinPoint> joinPoints = Arrays.asList(joinPoint);
+
+        List<Object> args = Arrays.asList(joinPoint.getArgs());
         //1.获取缓存数据
-        String prefix = annotation.value();
-        String key = prefix+joinPoints;
+        String prefix = gmallCache.value();
+        String key = prefix+args;
         Object cache = this.getCache(key, returnType);
         if (cache != null) {
             return cache;
         }
         //3.数据是空，空就加锁
-        String lockName = annotation.lockName();
-        RLock fairLock = this.redissonClient.getFairLock(lockName + joinPoints);
+        String lockName = gmallCache.lockName();
+        RLock fairLock = this.redissonClient.getFairLock(lockName + args);
         fairLock.lock();
         //4.判断缓存是否为空
         Object cache1 = this.getCache(key, returnType);
@@ -56,9 +55,9 @@ public class GmallCacheAspect {
         }
         Object result = joinPoint.proceed(joinPoint.getArgs());
         //数据放入缓存
-        int bound = annotation.bound();
-        int timeout = annotation.timeout();
-        this.redisTemplate.opsForValue().set(key,JSON.toJSONString(result), timeout+new Random().nextInt(bound), TimeUnit.MINUTES);
+        int bound = gmallCache.bound();
+        int timeout = gmallCache.timeout();
+        this.redisTemplate.opsForValue().set(key, JSON.toJSONString(result),timeout+new Random().nextInt(bound), TimeUnit.MINUTES);
         fairLock.unlock();
         return result;
 

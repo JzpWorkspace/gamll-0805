@@ -30,9 +30,9 @@ public class AuthController {
     ){
         String accredit = this.authService.accredit(username, password);
         if (StringUtils.isNotBlank(accredit)){
-            //       4.放入到cookie中
+            // 4.放入到cookie中
             CookieUtils.setCookie(request,response,jwtProperties.getCookieName(),accredit,jwtProperties.getExpireTime()*60);
         }
-        return  Resp.ok(null);
+        return Resp.ok(null);
     }
 }

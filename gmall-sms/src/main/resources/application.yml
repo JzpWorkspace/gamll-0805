@@ -3,7 +3,7 @@ server:
 spring:
   datasource:
     driver-class-name: com.mysql.jdbc.Driver
-    url: jdbc:mysql://192.168.211.128/guli_sms
+    url: jdbc:mysql://192.168.72.128/guli_sms
     username: root
     password: root
   redis:
